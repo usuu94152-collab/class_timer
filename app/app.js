@@ -244,6 +244,10 @@
     try {
       const recordsPayload = await requestJsonp(buildApiUrl('records'));
       const remoteRecords = (recordsPayload.data || []).map((record) => normalizeRecord(record, 'synced')).filter(Boolean);
+      const remoteFingerprints = new Set(remoteRecords.map(recordFingerprint));
+      records = records.filter((record) => (
+        record.sync_status !== 'synced' || remoteFingerprints.has(recordFingerprint(record))
+      ));
       records = mergeRecords(records, remoteRecords);
       writeRecords();
       connected = true;
