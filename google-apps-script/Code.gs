@@ -40,7 +40,9 @@ var RECORD_ID_PROPERTY_PREFIX = 'record_id_hash:';
  * GET /exec?action=students|records|health
  */
 function doGet(e) {
+  var callback = '';
   try {
+    callback = getJsonpCallback_(e);
     var action = getQueryParameter_(e, 'action');
 
     if (!action) {
@@ -48,7 +50,7 @@ function doGet(e) {
         ok: true,
         message: '사용 가능한 action을 지정하세요.',
         available_actions: AVAILABLE_ACTIONS
-      });
+      }, callback);
     }
 
     if (action === 'students') {
@@ -60,7 +62,7 @@ function doGet(e) {
           STUDENTS_SHEET_NAME,
           STUDENTS_HEADERS
         )
-      });
+      }, callback);
     }
 
     if (action === 'records') {
@@ -72,11 +74,11 @@ function doGet(e) {
           RECORDS_SHEET_NAME,
           RECORDS_HEADERS
         )
-      });
+      }, callback);
     }
 
     if (action === 'health') {
-      return jsonResponse_(getHealthStatus_());
+      return jsonResponse_(getHealthStatus_(), callback);
     }
 
     throwAppError_(
@@ -85,7 +87,7 @@ function doGet(e) {
       400
     );
   } catch (error) {
-    return errorResponseFromException_(error, 'GET_FAILED');
+    return errorResponseFromException_(error, 'GET_FAILED', callback);
   }
 }
 
@@ -177,9 +179,15 @@ function doPost(e) {
 }
 
 /** JSON 응답을 생성합니다. Apps Script Web App은 응답 본문에 상태 코드를 함께 제공합니다. */
-function jsonResponse_(payload) {
+function jsonResponse_(payload, callback) {
+  var body = JSON.stringify(payload);
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + '(' + body + ');')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
   return ContentService
-    .createTextOutput(JSON.stringify(payload))
+    .createTextOutput(body)
     .setMimeType(ContentService.MimeType.JSON);
 }
 
@@ -194,13 +202,20 @@ function errorResponse_(code, message, statusCode) {
   });
 }
 
-function errorResponseFromException_(error, fallbackCode) {
+function errorResponseFromException_(error, fallbackCode, callback) {
   var code = error && error.code ? error.code : fallbackCode;
   var message = error && error.message
     ? error.message
     : '처리 중 알 수 없는 오류가 발생했습니다.';
   var statusCode = error && error.statusCode ? error.statusCode : 500;
-  return errorResponse_(code, message, statusCode);
+  return jsonResponse_({
+    ok: false,
+    status_code: statusCode,
+    error: {
+      code: code,
+      message: message
+    }
+  }, callback);
 }
 
 function throwAppError_(code, message, statusCode) {
@@ -215,6 +230,24 @@ function getQueryParameter_(e, name) {
     return '';
   }
   return String(e.parameter[name]).trim().toLowerCase();
+}
+
+function getJsonpCallback_(e) {
+  if (!e || !e.parameter || e.parameter.callback === undefined) {
+    return '';
+  }
+  var callback = String(e.parameter.callback).trim();
+  if (!callback) {
+    return '';
+  }
+  if (!/^[A-Za-z_$][0-9A-Za-z_$]*$/.test(callback)) {
+    throwAppError_(
+      'INVALID_CALLBACK',
+      'callback은 올바른 JavaScript 함수 이름이어야 합니다.',
+      400
+    );
+  }
+  return callback;
 }
 
 function getSpreadsheet_() {

@@ -34,6 +34,7 @@
     .map((record) => normalizeRecord(record, record.sync_status || (record.record_id ? 'pending' : 'synced')))
     .filter(Boolean);
   let toastTimer = null;
+  let jsonpSequence = 0;
 
   function getAvailableClasses(studentList) {
     return [...new Set(studentList.map((student) => Number(student.class)))]
@@ -128,27 +129,50 @@
     return url.toString();
   }
 
-  async function requestApi(url, options = {}) {
-    const response = await fetch(url, {
-      cache: 'no-store',
-      credentials: 'include',
-      ...options
+  function requestJsonp(url) {
+    return new Promise((resolve, reject) => {
+      const callbackName = `classTimerJsonp_${Date.now()}_${jsonpSequence += 1}`;
+      const requestUrl = new URL(url);
+      const script = document.createElement('script');
+      let settled = false;
+      const timeoutId = window.setTimeout(() => {
+        cleanup();
+        reject(new Error('Google Sheets API 응답 시간이 초과되었습니다.'));
+      }, 10000);
+
+      function cleanup() {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeoutId);
+        delete window[callbackName];
+        script.remove();
+      }
+
+      window[callbackName] = (payload) => {
+        cleanup();
+        if (!payload || payload.ok !== true) {
+          reject(new Error(payload?.error?.message || 'Google Sheets API 요청에 실패했습니다.'));
+          return;
+        }
+        resolve(payload);
+      };
+      script.onerror = () => {
+        cleanup();
+        reject(new Error('Google Sheets API에 연결하지 못했습니다.'));
+      };
+      requestUrl.searchParams.set('callback', callbackName);
+      requestUrl.searchParams.set('_', String(Date.now()));
+      script.src = requestUrl.toString();
+      document.head.appendChild(script);
     });
-    let payload;
-    try {
-      payload = await response.json();
-    } catch (error) {
-      throw new Error('Google Sheets API가 JSON 응답을 보내지 않았습니다. Google 계정 로그인을 확인하세요.');
-    }
-    if (!response.ok || payload.ok !== true) {
-      throw new Error(payload.error?.message || 'Google Sheets API 요청에 실패했습니다.');
-    }
-    return payload;
   }
 
   async function sendRecordToApi(record) {
-    const payload = await requestApi(API_ENDPOINT, {
+    await fetch(API_ENDPOINT, {
       method: 'POST',
+      mode: 'no-cors',
+      cache: 'no-store',
+      credentials: 'omit',
       headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
       body: JSON.stringify({
         type: 'record',
@@ -161,9 +185,18 @@
         }
       })
     });
+    await new Promise((resolve) => window.setTimeout(resolve, 500));
+    const recordsPayload = await requestJsonp(buildApiUrl('records'));
+    const matchingRecord = (recordsPayload.data || [])
+      .map((remoteRecord) => normalizeRecord(remoteRecord, 'synced'))
+      .filter(Boolean)
+      .find((remoteRecord) => recordFingerprint(remoteRecord) === recordFingerprint(record));
+    if (!matchingRecord) {
+      throw new Error('기록 저장 여부를 확인하지 못했습니다.');
+    }
     return normalizeRecord({
-      ...(payload.record || record),
-      record_id: payload.record_id || record.record_id
+      ...matchingRecord,
+      record_id: record.record_id
     }, 'synced') || normalizeRecord(record, 'synced');
   }
 
@@ -201,7 +234,7 @@
   async function loadRemoteData() {
     let connected = false;
     try {
-      const studentPayload = await requestApi(buildApiUrl('students'));
+      const studentPayload = await requestJsonp(buildApiUrl('students'));
       applyRemoteStudents(studentPayload.data || []);
       connected = true;
     } catch (error) {
@@ -209,7 +242,7 @@
     }
 
     try {
-      const recordsPayload = await requestApi(buildApiUrl('records'));
+      const recordsPayload = await requestJsonp(buildApiUrl('records'));
       const remoteRecords = (recordsPayload.data || []).map((record) => normalizeRecord(record, 'synced')).filter(Boolean);
       records = mergeRecords(records, remoteRecords);
       writeRecords();
