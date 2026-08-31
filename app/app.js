@@ -432,6 +432,66 @@
     document.getElementById('save-button').disabled = false;
   }
 
+  function renderRecordsChart(student, studentRecords) {
+    const chartCard = document.getElementById('records-chart-card');
+    const chart = document.getElementById('records-chart');
+    if (!chartCard || !chart || studentRecords.length === 0) {
+      if (chartCard) chartCard.hidden = true;
+      return;
+    }
+
+    const chartWidth = 720;
+    const chartHeight = 280;
+    const chartLeft = 60;
+    const chartRight = 700;
+    const chartTop = 24;
+    const chartBottom = 220;
+    const values = studentRecords.map((record) => Number(record.record_seconds));
+    const best = Math.min(...values);
+    const minValue = Math.min(...values);
+    const maxValue = Math.max(...values);
+    const valueRange = Math.max(maxValue - minValue, 0.4);
+    const domainMin = Math.max(0, minValue - valueRange * 0.2);
+    const domainMax = maxValue + valueRange * 0.2;
+    const domainRange = domainMax - domainMin;
+    const xStep = studentRecords.length > 1 ? (chartRight - chartLeft) / (studentRecords.length - 1) : 0;
+    const points = studentRecords.map((record, index) => {
+      const value = Number(record.record_seconds);
+      const x = studentRecords.length > 1 ? chartLeft + xStep * index : (chartLeft + chartRight) / 2;
+      const y = chartBottom - ((value - domainMin) / domainRange) * (chartBottom - chartTop);
+      return { record, value, x, y, isBest: value === best };
+    });
+    const tickCount = 4;
+    const grid = Array.from({ length: tickCount + 1 }, (_, index) => {
+      const ratio = index / tickCount;
+      const value = domainMax - domainRange * ratio;
+      const y = chartTop + (chartBottom - chartTop) * ratio;
+      return `<line class="chart-grid-line" x1="${chartLeft}" y1="${y}" x2="${chartRight}" y2="${y}"></line>
+        <text class="chart-axis-label chart-axis-label--y" x="${chartLeft - 12}" y="${y + 4}" text-anchor="end">${formatSeconds(value)}초</text>`;
+    }).join('');
+    const line = points.map((point) => `${point.x},${point.y}`).join(' ');
+    const labels = points.map((point, index) => `
+      <text class="chart-axis-label chart-axis-label--x" x="${point.x}" y="${chartBottom + 31}" text-anchor="middle">${escapeHtml(point.record.attempt_no)}회</text>`).join('');
+    const circles = points.map((point) => `
+      <circle class="chart-point${point.isBest ? ' is-best' : ''}" cx="${point.x}" cy="${point.y}" r="6">
+        <title>${escapeHtml(point.record.attempt_no)}회차 · ${formatSeconds(point.value)}초</title>
+      </circle>`).join('');
+    const improvement = values[0] - best;
+
+    chart.innerHTML = `
+      <title id="records-chart-title">${escapeHtml(student.name)}의 회차별 기록 변화</title>
+      <desc id="records-chart-description">${studentRecords.length}회 기록 중 최고 기록은 ${formatSeconds(best)}초이며, 최초 기록 대비 ${formatSeconds(improvement)}초 향상되었습니다.</desc>
+      <g class="chart-grid">${grid}</g>
+      <line class="chart-axis" x1="${chartLeft}" y1="${chartTop}" x2="${chartLeft}" y2="${chartBottom}"></line>
+      <line class="chart-axis" x1="${chartLeft}" y1="${chartBottom}" x2="${chartRight}" y2="${chartBottom}"></line>
+      ${studentRecords.length > 1 ? `<polyline class="chart-line" points="${line}"></polyline>` : ''}
+      ${circles}
+      ${labels}
+      <text class="chart-caption" x="${chartLeft}" y="${chartHeight - 4}">회차</text>
+      <text class="chart-caption" x="${chartRight}" y="${chartTop - 8}" text-anchor="end">기록 시간</text>`;
+    chartCard.hidden = false;
+  }
+
   function renderRecords(studentId) {
     const student = getStudent(studentId);
     if (!student) return;
@@ -449,6 +509,7 @@
     document.getElementById('records-best').innerHTML = best === null ? '—<span>초</span>' : `${formatSeconds(best)}<span>초</span>`;
     document.getElementById('records-latest').innerHTML = latest === null ? '—<span>초</span>' : `${formatSeconds(latest)}<span>초</span>`;
     document.getElementById('records-improvement').innerHTML = improvement === null ? '—<span>초</span>' : `${formatSeconds(improvement)}<span>초</span>`;
+    renderRecordsChart(student, studentRecords);
 
     const recordsList = document.getElementById('records-list');
     recordsList.innerHTML = [...studentRecords].reverse().map((record) => `
