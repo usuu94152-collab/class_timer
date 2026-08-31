@@ -102,6 +102,9 @@ button:focus-visible, a:focus-visible {
   box-shadow: 0 0 0 4px rgba(61, 216, 176, 0.12);
 }
 
+.header-badge[data-status="connecting"] .status-dot { background: var(--orange-500); box-shadow: 0 0 0 4px rgba(255, 156, 95, 0.12); }
+.header-badge[data-status="offline"] .status-dot { background: var(--orange-500); box-shadow: 0 0 0 4px rgba(255, 156, 95, 0.12); }
+
 .main-content {
   width: min(1180px, calc(100% - 56px));
   margin: 0 auto;

@@ -17,7 +17,10 @@
           <span class="brand-context">체육수업 기록관리</span>
         </span>
       </a>
-      <div class="header-badge"><span class="status-dot" aria-hidden="true"></span>이 기기에 저장</div>
+      <div class="header-badge" id="connection-status" data-status="connecting">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="connection-status-label">Google Sheets 연결 중</span>
+      </div>
     </header>
 
     <main class="main-content">
@@ -62,7 +65,7 @@
 
         <footer class="screen-footer">
           <span class="footer-lock" aria-hidden="true">▣</span>
-          <span>기록은 이 크롬북에 안전하게 자동 저장됩니다.</span>
+          <span>온라인 연결 시 Google Sheets에 저장되며, 연결이 없으면 이 기기에 임시 저장됩니다.</span>
         </footer>
       </section>
 
