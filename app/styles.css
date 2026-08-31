@@ -359,7 +359,7 @@ button:focus-visible, a:focus-visible {
 .records-header > div > p:last-child { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
 .record-summary-badge { min-width: 104px; padding: 15px 18px; display: flex; flex-direction: column; align-items: end; border-radius: 13px; color: var(--muted); background: var(--blue-100); font-size: 11px; }
 .record-summary-badge strong { color: var(--blue-500); font-family: 'Cascadia Mono', 'Roboto Mono', monospace; font-size: 27px; font-weight: 500; line-height: 1; }
-.records-overview { margin: 39px 0 18px; display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); box-shadow: 0 8px 25px rgba(23, 49, 88, 0.035); }
+.records-overview { margin: 39px 0 18px; display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); box-shadow: 0 8px 25px rgba(23, 49, 88, 0.035); }
 .records-overview > div { padding: 22px 25px; }
 .records-overview > div + div { border-left: 1px solid var(--line); }
 .records-overview span { display: block; color: var(--muted); font-size: 11px; }
@@ -428,6 +428,9 @@ button:focus-visible, a:focus-visible {
   .records-header h1 { font-size: 34px; }
   .records-header > div > p:last-child { font-size: 11px; }
   .record-summary-badge { min-width: 80px; padding: 12px; }
+  .records-overview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .records-overview > div:nth-child(odd) { border-left: 0; }
+  .records-overview > div:nth-child(n + 3) { border-top: 1px solid var(--line); }
   .records-overview > div { padding: 17px 14px; }
   .records-overview strong { font-size: 21px; }
   .records-table th, .records-table td { padding: 14px 12px; }

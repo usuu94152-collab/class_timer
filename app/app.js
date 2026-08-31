@@ -432,15 +432,19 @@
     const student = getStudent(studentId);
     if (!student) return;
     const studentRecords = getStudentRecords(studentId);
+    const first = studentRecords.length ? studentRecords[0].record_seconds : null;
     const best = studentRecords.length ? Math.min(...studentRecords.map((record) => Number(record.record_seconds))) : null;
     const latest = studentRecords.length ? studentRecords[studentRecords.length - 1].record_seconds : null;
+    const improvement = first === null || best === null ? null : first - best;
 
     document.getElementById('records-title').textContent = `${student.name}의 기록`;
     document.getElementById('records-student-meta').textContent = `${student.class}반 · ${student.group_or_team} · ${student.number}번 · 장애물달리기`;
     document.getElementById('records-count').textContent = studentRecords.length;
     document.getElementById('records-attempts').innerHTML = `${studentRecords.length}<span>회</span>`;
+    document.getElementById('records-first').innerHTML = first === null ? '—<span>초</span>' : `${formatSeconds(first)}<span>초</span>`;
     document.getElementById('records-best').innerHTML = best === null ? '—<span>초</span>' : `${formatSeconds(best)}<span>초</span>`;
     document.getElementById('records-latest').innerHTML = latest === null ? '—<span>초</span>' : `${formatSeconds(latest)}<span>초</span>`;
+    document.getElementById('records-improvement').innerHTML = improvement === null ? '—<span>초</span>' : `${formatSeconds(improvement)}<span>초</span>`;
 
     const recordsList = document.getElementById('records-list');
     recordsList.innerHTML = [...studentRecords].reverse().map((record) => `
