@@ -3,18 +3,24 @@
 
   const ACTIVITY_TYPE = 'obstacle_run';
   const STORAGE_KEY = 'movement-records-obstacle-run-v1';
+  const CLASS_STORAGE_KEY = 'movement-records-selected-class-v1';
   const GROUP_STORAGE_KEY = 'movement-records-selected-group-v1';
 
   const students = JSON.parse(document.getElementById('student-data').textContent);
   const screens = [...document.querySelectorAll('[data-screen]')];
-  const groupTabs = [...document.querySelectorAll('.group-tab')];
+  const classTabs = document.getElementById('class-tabs');
+  const groupTabs = document.getElementById('group-tabs');
   const studentsGrid = document.getElementById('students-grid');
   const emptyState = document.getElementById('empty-state');
   const toast = document.getElementById('toast');
+  const availableClasses = [...new Set(students.map((student) => Number(student.class)))]
+    .filter((classNo) => Number.isInteger(classNo))
+    .sort((first, second) => first - second);
 
   const state = {
     screen: 'selection',
-    selectedGroup: readSelectedGroup(),
+    selectedClass: readSelectedClass(),
+    selectedGroup: '',
     selectedStudentId: null,
     recordsStudentId: null,
     timerStatus: 'idle',
@@ -28,9 +34,36 @@
   let records = readRecords();
   let toastTimer = null;
 
-  function readSelectedGroup() {
-    const storedGroup = Number.parseInt(localStorage.getItem(GROUP_STORAGE_KEY), 10);
-    return Number.isInteger(storedGroup) && storedGroup >= 1 && storedGroup <= 5 ? storedGroup : 1;
+  function readSelectedClass() {
+    const storedClass = Number.parseInt(localStorage.getItem(CLASS_STORAGE_KEY), 10);
+    return availableClasses.includes(storedClass) ? storedClass : (availableClasses[0] ?? 1);
+  }
+
+  function getGroupsForClass(classNo) {
+    return [...new Set(students
+      .filter((student) => Number(student.class) === classNo)
+      .map((student) => student.group_or_team))]
+      .sort((first, second) => {
+        const firstGender = first.startsWith('남') ? 0 : first.startsWith('여') ? 1 : 2;
+        const secondGender = second.startsWith('남') ? 0 : second.startsWith('여') ? 1 : 2;
+        if (firstGender !== secondGender) return firstGender - secondGender;
+        return Number.parseInt(first.replace(/\D/g, ''), 10) - Number.parseInt(second.replace(/\D/g, ''), 10);
+      });
+  }
+
+  function readSelectedGroup(classNo) {
+    const storedGroup = localStorage.getItem(GROUP_STORAGE_KEY);
+    const groups = getGroupsForClass(classNo);
+    return groups.includes(storedGroup) ? storedGroup : (groups[0] ?? '');
+  }
+
+  function syncSelectedGroup() {
+    const groups = getGroupsForClass(state.selectedClass);
+    if (!groups.includes(state.selectedGroup)) {
+      state.selectedGroup = groups[0] ?? '';
+      localStorage.setItem(GROUP_STORAGE_KEY, state.selectedGroup);
+    }
+    return groups;
   }
 
   function readRecords() {
@@ -86,19 +119,25 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function renderGroupTabs() {
-    groupTabs.forEach((tab) => {
-      const isSelected = Number(tab.dataset.group) === state.selectedGroup;
-      tab.classList.toggle('is-selected', isSelected);
-      tab.setAttribute('aria-selected', String(isSelected));
-    });
+  function renderClassTabs() {
+    classTabs.innerHTML = availableClasses.map((classNo) => `
+      <button class="class-tab${classNo === state.selectedClass ? ' is-selected' : ''}" type="button" role="tab" aria-selected="${classNo === state.selectedClass}" data-class="${classNo}">${classNo}반</button>`).join('');
+  }
+
+  function renderGroupTabs(groups) {
+    groupTabs.innerHTML = groups.map((group) => `
+      <button class="group-tab${group === state.selectedGroup ? ' is-selected' : ''}" type="button" role="tab" aria-selected="${group === state.selectedGroup}" data-group="${escapeHtml(group)}">${escapeHtml(group)}</button>`).join('');
   }
 
   function renderSelection() {
-    const groupStudents = students.filter((student) => student.group_or_team === `${state.selectedGroup}조`);
-    document.getElementById('selected-group-label').textContent = `${state.selectedGroup}조`;
+    const groups = syncSelectedGroup();
+    const groupStudents = students.filter((student) => Number(student.class) === state.selectedClass && student.group_or_team === state.selectedGroup);
+    document.getElementById('selected-class-label').textContent = `${state.selectedClass}반`;
+    document.getElementById('selected-class-caption').textContent = `${state.selectedClass}반 수업`;
+    document.getElementById('selected-group-label').textContent = state.selectedGroup;
     document.getElementById('group-count').textContent = groupStudents.length;
-    renderGroupTabs();
+    renderClassTabs();
+    renderGroupTabs(groups);
 
     studentsGrid.innerHTML = groupStudents.map((student) => {
       const studentRecords = getStudentRecords(student.student_id);
@@ -137,7 +176,7 @@
     const seconds = state.timerStatus === 'running' ? (performance.now() - state.startedAt) / 1000 : state.elapsedMs / 1000;
 
     document.getElementById('timer-avatar').textContent = student.name.slice(0, 1);
-    document.getElementById('timer-student-meta').textContent = `${student.group_or_team} · ${student.number}번`;
+    document.getElementById('timer-student-meta').textContent = `${student.class}반 · ${student.group_or_team} · ${student.number}번`;
     document.getElementById('timer-title').textContent = student.name;
     display.innerHTML = formatTime(seconds);
     timerCard.classList.toggle('is-running', isRunning);
@@ -155,7 +194,7 @@
     const student = getStudent(state.pendingRecord?.student_id);
     if (!student || !state.pendingRecord) return;
     document.getElementById('confirm-avatar').textContent = student.name.slice(0, 1);
-    document.getElementById('confirm-student-meta').textContent = `${student.group_or_team} · ${student.number}번`;
+    document.getElementById('confirm-student-meta').textContent = `${student.class}반 · ${student.group_or_team} · ${student.number}번`;
     document.getElementById('confirm-student-name').textContent = student.name;
     document.getElementById('confirm-time').innerHTML = formatTime(state.pendingRecord.record_seconds);
     document.getElementById('confirm-attempt').textContent = `${state.pendingRecord.attempt_no}회차`;
@@ -170,7 +209,7 @@
     const latest = studentRecords.length ? studentRecords[studentRecords.length - 1].record_seconds : null;
 
     document.getElementById('records-title').textContent = `${student.name}의 기록`;
-    document.getElementById('records-student-meta').textContent = `${student.group_or_team} · ${student.number}번 · 장애물달리기`;
+    document.getElementById('records-student-meta').textContent = `${student.class}반 · ${student.group_or_team} · ${student.number}번 · 장애물달리기`;
     document.getElementById('records-count').textContent = studentRecords.length;
     document.getElementById('records-attempts').innerHTML = `${studentRecords.length}<span>회</span>`;
     document.getElementById('records-best').innerHTML = best === null ? '—<span>초</span>' : `${formatSeconds(best)}<span>초</span>`;
@@ -282,14 +321,28 @@
   }
 
   document.addEventListener('click', (event) => {
+    const classTab = event.target.closest('.class-tab');
+    if (classTab) {
+      if (state.timerStatus === 'running') {
+        showToast('측정 중에는 반을 변경할 수 없어요.');
+        return;
+      }
+      state.selectedClass = Number(classTab.dataset.class);
+      state.selectedGroup = readSelectedGroup(state.selectedClass);
+      localStorage.setItem(CLASS_STORAGE_KEY, String(state.selectedClass));
+      localStorage.setItem(GROUP_STORAGE_KEY, state.selectedGroup);
+      renderSelection();
+      return;
+    }
+
     const groupTab = event.target.closest('.group-tab');
     if (groupTab) {
       if (state.timerStatus === 'running') {
         showToast('측정 중에는 조를 변경할 수 없어요.');
         return;
       }
-      state.selectedGroup = Number(groupTab.dataset.group);
-      localStorage.setItem(GROUP_STORAGE_KEY, String(state.selectedGroup));
+      state.selectedGroup = groupTab.dataset.group;
+      localStorage.setItem(GROUP_STORAGE_KEY, state.selectedGroup);
       renderSelection();
       return;
     }
@@ -325,5 +378,6 @@
     }
   });
 
+  state.selectedGroup = readSelectedGroup(state.selectedClass);
   renderSelection();
 })();

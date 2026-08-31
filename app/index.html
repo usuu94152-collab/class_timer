@@ -25,26 +25,29 @@
         <div class="hero-copy">
           <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>장애물달리기 · 1차 MVP</p>
           <h1 id="selection-title">오늘의 기록을<br><span>빠르게 쌓아보세요.</span></h1>
-          <p class="hero-description">조를 선택하고, 달릴 학생의 이름을 눌러<br class="desktop-break"> 바로 측정을 시작하세요.</p>
+          <p class="hero-description">반과 조를 선택하고, 달릴 학생의 이름을 눌러<br class="desktop-break"> 바로 측정을 시작하세요.</p>
         </div>
 
         <div class="selection-toolbar">
-          <div class="toolbar-heading">
-            <span class="section-label">조 선택</span>
-            <span class="toolbar-caption">현재 조의 학생만 보여요</span>
+          <div class="selection-filter">
+            <div class="toolbar-heading">
+              <span class="section-label">반 선택</span>
+              <span class="toolbar-caption">수업 반을 먼저 선택하세요</span>
+            </div>
+            <div class="class-tabs" id="class-tabs" role="tablist" aria-label="반 선택"></div>
           </div>
-          <div class="group-tabs" role="tablist" aria-label="조 선택">
-            <button class="group-tab is-selected" type="button" role="tab" aria-selected="true" data-group="1">1조</button>
-            <button class="group-tab" type="button" role="tab" aria-selected="false" data-group="2">2조</button>
-            <button class="group-tab" type="button" role="tab" aria-selected="false" data-group="3">3조</button>
-            <button class="group-tab" type="button" role="tab" aria-selected="false" data-group="4">4조</button>
-            <button class="group-tab" type="button" role="tab" aria-selected="false" data-group="5">5조</button>
+          <div class="selection-filter">
+            <div class="toolbar-heading">
+              <span class="section-label">조 선택</span>
+              <span class="toolbar-caption" id="selected-class-caption">1반 수업</span>
+            </div>
+            <div class="group-tabs" id="group-tabs" role="tablist" aria-label="조 선택"></div>
           </div>
         </div>
 
         <div class="list-heading">
           <div>
-            <h2><span id="selected-group-label">1조</span> 학생</h2>
+            <h2><span id="selected-class-label">1반</span> <span id="selected-group-label">남1조</span> 학생</h2>
             <p>측정할 학생을 선택하세요.</p>
           </div>
           <div class="student-count"><strong id="group-count">0</strong><span>명 참여</span></div>
@@ -77,7 +80,7 @@
             <div class="student-identity student-identity--large">
               <span class="student-avatar" id="timer-avatar" aria-hidden="true">김</span>
               <div>
-                <p class="identity-overline" id="timer-student-meta">1조 · 1번</p>
+                <p class="identity-overline" id="timer-student-meta">1반 · 남1조 · 1번</p>
                 <h1 id="timer-title">김민수</h1>
               </div>
             </div>
@@ -117,7 +120,7 @@
               <div class="student-identity">
                 <span class="student-avatar student-avatar--small" id="confirm-avatar" aria-hidden="true">김</span>
                 <div>
-                  <p class="identity-overline" id="confirm-student-meta">1조 · 1번</p>
+                <p class="identity-overline" id="confirm-student-meta">1반 · 남1조 · 1번</p>
                   <h2 id="confirm-student-name">김민수</h2>
                 </div>
               </div>
@@ -151,7 +154,7 @@
           <div>
             <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>기록 조회</p>
             <h1 id="records-title">김민수의 기록</h1>
-            <p id="records-student-meta">1조 · 1번 · 장애물달리기</p>
+            <p id="records-student-meta">1반 · 남1조 · 1번 · 장애물달리기</p>
           </div>
           <div class="record-summary-badge"><strong id="records-count">0</strong><span>회 측정</span></div>
         </div>
@@ -181,23 +184,1704 @@
   </div>
 
   <script id="student-data" type="application/json">
-    [
-      {"student_id":"30101","grade":3,"class":1,"number":1,"name":"김민수","group_or_team":"1조"},
-      {"student_id":"30102","grade":3,"class":1,"number":2,"name":"박지훈","group_or_team":"1조"},
-      {"student_id":"30103","grade":3,"class":1,"number":3,"name":"이서연","group_or_team":"1조"},
-      {"student_id":"30104","grade":3,"class":1,"number":4,"name":"최도윤","group_or_team":"2조"},
-      {"student_id":"30105","grade":3,"class":1,"number":5,"name":"정하은","group_or_team":"2조"},
-      {"student_id":"30106","grade":3,"class":1,"number":6,"name":"윤지호","group_or_team":"2조"},
-      {"student_id":"30107","grade":3,"class":1,"number":7,"name":"한유진","group_or_team":"3조"},
-      {"student_id":"30108","grade":3,"class":1,"number":8,"name":"오준혁","group_or_team":"3조"},
-      {"student_id":"30109","grade":3,"class":1,"number":9,"name":"서채원","group_or_team":"3조"},
-      {"student_id":"30110","grade":3,"class":1,"number":10,"name":"강현우","group_or_team":"4조"},
-      {"student_id":"30111","grade":3,"class":1,"number":11,"name":"임수빈","group_or_team":"4조"},
-      {"student_id":"30112","grade":3,"class":1,"number":12,"name":"조은서","group_or_team":"4조"},
-      {"student_id":"30113","grade":3,"class":1,"number":13,"name":"배시온","group_or_team":"5조"},
-      {"student_id":"30114","grade":3,"class":1,"number":14,"name":"문가온","group_or_team":"5조"},
-      {"student_id":"30115","grade":3,"class":1,"number":15,"name":"노하율","group_or_team":"5조"}
-    ]
+  [
+    {
+      "student_id": "20101",
+      "grade": 2,
+      "class": 1,
+      "number": 1,
+      "name": "강민준",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20102",
+      "grade": 2,
+      "class": 1,
+      "number": 2,
+      "name": "강보민",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20103",
+      "grade": 2,
+      "class": 1,
+      "number": 3,
+      "name": "강상훈",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20104",
+      "grade": 2,
+      "class": 1,
+      "number": 4,
+      "name": "고나연",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20105",
+      "grade": 2,
+      "class": 1,
+      "number": 5,
+      "name": "권도연",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20106",
+      "grade": 2,
+      "class": 1,
+      "number": 6,
+      "name": "권민서",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20107",
+      "grade": 2,
+      "class": 1,
+      "number": 7,
+      "name": "김규민",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20108",
+      "grade": 2,
+      "class": 1,
+      "number": 8,
+      "name": "김나경",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20109",
+      "grade": 2,
+      "class": 1,
+      "number": 9,
+      "name": "김다현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20110",
+      "grade": 2,
+      "class": 1,
+      "number": 10,
+      "name": "김대규",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20111",
+      "grade": 2,
+      "class": 1,
+      "number": 11,
+      "name": "김도영",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20112",
+      "grade": 2,
+      "class": 1,
+      "number": 12,
+      "name": "김도훈",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20113",
+      "grade": 2,
+      "class": 1,
+      "number": 13,
+      "name": "김태민",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20114",
+      "grade": 2,
+      "class": 1,
+      "number": 14,
+      "name": "류소현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20115",
+      "grade": 2,
+      "class": 1,
+      "number": 15,
+      "name": "박도현",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20116",
+      "grade": 2,
+      "class": 1,
+      "number": 16,
+      "name": "배세현",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20117",
+      "grade": 2,
+      "class": 1,
+      "number": 17,
+      "name": "손현지",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20118",
+      "grade": 2,
+      "class": 1,
+      "number": 18,
+      "name": "송지효",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20119",
+      "grade": 2,
+      "class": 1,
+      "number": 19,
+      "name": "양진영",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20120",
+      "grade": 2,
+      "class": 1,
+      "number": 20,
+      "name": "여승후",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20121",
+      "grade": 2,
+      "class": 1,
+      "number": 21,
+      "name": "이가원",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20122",
+      "grade": 2,
+      "class": 1,
+      "number": 22,
+      "name": "이한빛",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20123",
+      "grade": 2,
+      "class": 1,
+      "number": 23,
+      "name": "정다빈",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20124",
+      "grade": 2,
+      "class": 1,
+      "number": 24,
+      "name": "정혜원",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20125",
+      "grade": 2,
+      "class": 1,
+      "number": 25,
+      "name": "조세은",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20126",
+      "grade": 2,
+      "class": 1,
+      "number": 26,
+      "name": "최연서",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20127",
+      "grade": 2,
+      "class": 1,
+      "number": 27,
+      "name": "최예원",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20128",
+      "grade": 2,
+      "class": 1,
+      "number": 28,
+      "name": "한나경",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20129",
+      "grade": 2,
+      "class": 1,
+      "number": 29,
+      "name": "홍지안",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20130",
+      "grade": 2,
+      "class": 1,
+      "number": 30,
+      "name": "황시현",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20131",
+      "grade": 2,
+      "class": 1,
+      "number": 31,
+      "name": "노채원",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20201",
+      "grade": 2,
+      "class": 2,
+      "number": 1,
+      "name": "강지민",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20202",
+      "grade": 2,
+      "class": 2,
+      "number": 2,
+      "name": "김기령",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20203",
+      "grade": 2,
+      "class": 2,
+      "number": 3,
+      "name": "김나현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20204",
+      "grade": 2,
+      "class": 2,
+      "number": 4,
+      "name": "김민식",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20205",
+      "grade": 2,
+      "class": 2,
+      "number": 5,
+      "name": "김상찬",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20206",
+      "grade": 2,
+      "class": 2,
+      "number": 6,
+      "name": "김수민",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20207",
+      "grade": 2,
+      "class": 2,
+      "number": 7,
+      "name": "김지원",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20208",
+      "grade": 2,
+      "class": 2,
+      "number": 8,
+      "name": "문채원",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20209",
+      "grade": 2,
+      "class": 2,
+      "number": 9,
+      "name": "박가윤",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20210",
+      "grade": 2,
+      "class": 2,
+      "number": 10,
+      "name": "박태헌",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20211",
+      "grade": 2,
+      "class": 2,
+      "number": 11,
+      "name": "배연빈",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20212",
+      "grade": 2,
+      "class": 2,
+      "number": 12,
+      "name": "백민소",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20213",
+      "grade": 2,
+      "class": 2,
+      "number": 13,
+      "name": "신유주",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20214",
+      "grade": 2,
+      "class": 2,
+      "number": 14,
+      "name": "심민준",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20215",
+      "grade": 2,
+      "class": 2,
+      "number": 15,
+      "name": "안정완",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20216",
+      "grade": 2,
+      "class": 2,
+      "number": 16,
+      "name": "이가연",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20217",
+      "grade": 2,
+      "class": 2,
+      "number": 17,
+      "name": "이다은",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20218",
+      "grade": 2,
+      "class": 2,
+      "number": 18,
+      "name": "이도건",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20219",
+      "grade": 2,
+      "class": 2,
+      "number": 19,
+      "name": "이지훈",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20220",
+      "grade": 2,
+      "class": 2,
+      "number": 20,
+      "name": "이채은",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20221",
+      "grade": 2,
+      "class": 2,
+      "number": 21,
+      "name": "장윤서",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20222",
+      "grade": 2,
+      "class": 2,
+      "number": 22,
+      "name": "정세현",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20223",
+      "grade": 2,
+      "class": 2,
+      "number": 23,
+      "name": "조민재",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20224",
+      "grade": 2,
+      "class": 2,
+      "number": 24,
+      "name": "조영빈",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20225",
+      "grade": 2,
+      "class": 2,
+      "number": 25,
+      "name": "지은수",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20226",
+      "grade": 2,
+      "class": 2,
+      "number": 26,
+      "name": "최나은",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20227",
+      "grade": 2,
+      "class": 2,
+      "number": 27,
+      "name": "최민준",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20228",
+      "grade": 2,
+      "class": 2,
+      "number": 28,
+      "name": "최정후",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20229",
+      "grade": 2,
+      "class": 2,
+      "number": 29,
+      "name": "홍성민",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20230",
+      "grade": 2,
+      "class": 2,
+      "number": 30,
+      "name": "홍지욱",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20301",
+      "grade": 2,
+      "class": 3,
+      "number": 1,
+      "name": "권민서",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20302",
+      "grade": 2,
+      "class": 3,
+      "number": 2,
+      "name": "김다희",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20303",
+      "grade": 2,
+      "class": 3,
+      "number": 3,
+      "name": "김민준",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20304",
+      "grade": 2,
+      "class": 3,
+      "number": 4,
+      "name": "김세현",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20305",
+      "grade": 2,
+      "class": 3,
+      "number": 5,
+      "name": "김희조",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20306",
+      "grade": 2,
+      "class": 3,
+      "number": 6,
+      "name": "남예빈",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20307",
+      "grade": 2,
+      "class": 3,
+      "number": 7,
+      "name": "노하윤",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20308",
+      "grade": 2,
+      "class": 3,
+      "number": 8,
+      "name": "문광희",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20309",
+      "grade": 2,
+      "class": 3,
+      "number": 9,
+      "name": "문다은",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20310",
+      "grade": 2,
+      "class": 3,
+      "number": 10,
+      "name": "박관우",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20311",
+      "grade": 2,
+      "class": 3,
+      "number": 11,
+      "name": "박서현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20312",
+      "grade": 2,
+      "class": 3,
+      "number": 12,
+      "name": "박소현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20313",
+      "grade": 2,
+      "class": 3,
+      "number": 13,
+      "name": "박지태",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20314",
+      "grade": 2,
+      "class": 3,
+      "number": 14,
+      "name": "서소연",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20315",
+      "grade": 2,
+      "class": 3,
+      "number": 15,
+      "name": "손기범",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20316",
+      "grade": 2,
+      "class": 3,
+      "number": 16,
+      "name": "손민재",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20317",
+      "grade": 2,
+      "class": 3,
+      "number": 17,
+      "name": "송근혁",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20318",
+      "grade": 2,
+      "class": 3,
+      "number": 18,
+      "name": "안겸서",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20319",
+      "grade": 2,
+      "class": 3,
+      "number": 19,
+      "name": "이다은",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20320",
+      "grade": 2,
+      "class": 3,
+      "number": 20,
+      "name": "이승우",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20321",
+      "grade": 2,
+      "class": 3,
+      "number": 21,
+      "name": "이재백",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20322",
+      "grade": 2,
+      "class": 3,
+      "number": 22,
+      "name": "이재용",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20323",
+      "grade": 2,
+      "class": 3,
+      "number": 23,
+      "name": "이재환",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20324",
+      "grade": 2,
+      "class": 3,
+      "number": 24,
+      "name": "장우영",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20325",
+      "grade": 2,
+      "class": 3,
+      "number": 25,
+      "name": "장혜성",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20326",
+      "grade": 2,
+      "class": 3,
+      "number": 26,
+      "name": "조도영",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20327",
+      "grade": 2,
+      "class": 3,
+      "number": 27,
+      "name": "조현승",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20328",
+      "grade": 2,
+      "class": 3,
+      "number": 28,
+      "name": "최라록",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20329",
+      "grade": 2,
+      "class": 3,
+      "number": 29,
+      "name": "최연이",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20330",
+      "grade": 2,
+      "class": 3,
+      "number": 30,
+      "name": "황태영",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20401",
+      "grade": 2,
+      "class": 4,
+      "number": 1,
+      "name": "김고운",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20402",
+      "grade": 2,
+      "class": 4,
+      "number": 2,
+      "name": "김나현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20403",
+      "grade": 2,
+      "class": 4,
+      "number": 3,
+      "name": "김도영",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20404",
+      "grade": 2,
+      "class": 4,
+      "number": 4,
+      "name": "김동건",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20405",
+      "grade": 2,
+      "class": 4,
+      "number": 5,
+      "name": "김민송",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20406",
+      "grade": 2,
+      "class": 4,
+      "number": 6,
+      "name": "김시헌",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20407",
+      "grade": 2,
+      "class": 4,
+      "number": 7,
+      "name": "김아람",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20408",
+      "grade": 2,
+      "class": 4,
+      "number": 8,
+      "name": "도경민",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20409",
+      "grade": 2,
+      "class": 4,
+      "number": 9,
+      "name": "박서현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20410",
+      "grade": 2,
+      "class": 4,
+      "number": 10,
+      "name": "박예진",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20411",
+      "grade": 2,
+      "class": 4,
+      "number": 11,
+      "name": "서주희",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20412",
+      "grade": 2,
+      "class": 4,
+      "number": 12,
+      "name": "송서연",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20413",
+      "grade": 2,
+      "class": 4,
+      "number": 13,
+      "name": "윤수빈",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20414",
+      "grade": 2,
+      "class": 4,
+      "number": 14,
+      "name": "윤예빈",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20415",
+      "grade": 2,
+      "class": 4,
+      "number": 15,
+      "name": "이나은",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20416",
+      "grade": 2,
+      "class": 4,
+      "number": 16,
+      "name": "이도건",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20417",
+      "grade": 2,
+      "class": 4,
+      "number": 17,
+      "name": "이솔지",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20418",
+      "grade": 2,
+      "class": 4,
+      "number": 18,
+      "name": "이수민",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20419",
+      "grade": 2,
+      "class": 4,
+      "number": 19,
+      "name": "이예지",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20420",
+      "grade": 2,
+      "class": 4,
+      "number": 20,
+      "name": "이유정",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20421",
+      "grade": 2,
+      "class": 4,
+      "number": 21,
+      "name": "이재민",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20422",
+      "grade": 2,
+      "class": 4,
+      "number": 22,
+      "name": "이정민",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20423",
+      "grade": 2,
+      "class": 4,
+      "number": 23,
+      "name": "이지안",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20424",
+      "grade": 2,
+      "class": 4,
+      "number": 24,
+      "name": "정상희",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20425",
+      "grade": 2,
+      "class": 4,
+      "number": 25,
+      "name": "정윤서",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20426",
+      "grade": 2,
+      "class": 4,
+      "number": 26,
+      "name": "조예진",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20427",
+      "grade": 2,
+      "class": 4,
+      "number": 27,
+      "name": "진재경",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20428",
+      "grade": 2,
+      "class": 4,
+      "number": 28,
+      "name": "최진석",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20429",
+      "grade": 2,
+      "class": 4,
+      "number": 29,
+      "name": "하이안",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20430",
+      "grade": 2,
+      "class": 4,
+      "number": 30,
+      "name": "현지혜",
+      "group_or_team": "여4조"
+    },
+    {
+      "student_id": "20501",
+      "grade": 2,
+      "class": 5,
+      "number": 1,
+      "name": "고나경",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20502",
+      "grade": 2,
+      "class": 5,
+      "number": 2,
+      "name": "곽은서",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20503",
+      "grade": 2,
+      "class": 5,
+      "number": 3,
+      "name": "권민서",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20504",
+      "grade": 2,
+      "class": 5,
+      "number": 4,
+      "name": "권준혁",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20505",
+      "grade": 2,
+      "class": 5,
+      "number": 5,
+      "name": "김나현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20506",
+      "grade": 2,
+      "class": 5,
+      "number": 6,
+      "name": "김도현",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20507",
+      "grade": 2,
+      "class": 5,
+      "number": 7,
+      "name": "김동윤",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20508",
+      "grade": 2,
+      "class": 5,
+      "number": 8,
+      "name": "김시우",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20509",
+      "grade": 2,
+      "class": 5,
+      "number": 9,
+      "name": "김지유",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20510",
+      "grade": 2,
+      "class": 5,
+      "number": 10,
+      "name": "남서윤",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20511",
+      "grade": 2,
+      "class": 5,
+      "number": 11,
+      "name": "노태완",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20512",
+      "grade": 2,
+      "class": 5,
+      "number": 12,
+      "name": "박서현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20513",
+      "grade": 2,
+      "class": 5,
+      "number": 13,
+      "name": "박소현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20514",
+      "grade": 2,
+      "class": 5,
+      "number": 14,
+      "name": "박예빈",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20515",
+      "grade": 2,
+      "class": 5,
+      "number": 15,
+      "name": "박주연",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20516",
+      "grade": 2,
+      "class": 5,
+      "number": 16,
+      "name": "박지훈",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20517",
+      "grade": 2,
+      "class": 5,
+      "number": 17,
+      "name": "배수빈",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20518",
+      "grade": 2,
+      "class": 5,
+      "number": 18,
+      "name": "심효은",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20519",
+      "grade": 2,
+      "class": 5,
+      "number": 19,
+      "name": "이민재",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20520",
+      "grade": 2,
+      "class": 5,
+      "number": 20,
+      "name": "이세진",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20521",
+      "grade": 2,
+      "class": 5,
+      "number": 21,
+      "name": "이승준",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20522",
+      "grade": 2,
+      "class": 5,
+      "number": 22,
+      "name": "이시열",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20523",
+      "grade": 2,
+      "class": 5,
+      "number": 23,
+      "name": "이장호",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20524",
+      "grade": 2,
+      "class": 5,
+      "number": 24,
+      "name": "이지원",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20525",
+      "grade": 2,
+      "class": 5,
+      "number": 25,
+      "name": "임승혁",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20526",
+      "grade": 2,
+      "class": 5,
+      "number": 26,
+      "name": "정지훈",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20527",
+      "grade": 2,
+      "class": 5,
+      "number": 27,
+      "name": "정해린",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20528",
+      "grade": 2,
+      "class": 5,
+      "number": 28,
+      "name": "지윤정",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20529",
+      "grade": 2,
+      "class": 5,
+      "number": 29,
+      "name": "차유나",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20530",
+      "grade": 2,
+      "class": 5,
+      "number": 30,
+      "name": "최은우",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20531",
+      "grade": 2,
+      "class": 5,
+      "number": 31,
+      "name": "허유은",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20601",
+      "grade": 2,
+      "class": 6,
+      "number": 1,
+      "name": "강명승",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20602",
+      "grade": 2,
+      "class": 6,
+      "number": 2,
+      "name": "기나형",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20603",
+      "grade": 2,
+      "class": 6,
+      "number": 3,
+      "name": "김민송",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20604",
+      "grade": 2,
+      "class": 6,
+      "number": 4,
+      "name": "김수민",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20605",
+      "grade": 2,
+      "class": 6,
+      "number": 5,
+      "name": "김수연",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20606",
+      "grade": 2,
+      "class": 6,
+      "number": 6,
+      "name": "김종윤",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20607",
+      "grade": 2,
+      "class": 6,
+      "number": 7,
+      "name": "김채은",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20608",
+      "grade": 2,
+      "class": 6,
+      "number": 8,
+      "name": "노우진",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20609",
+      "grade": 2,
+      "class": 6,
+      "number": 9,
+      "name": "박도훈",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20610",
+      "grade": 2,
+      "class": 6,
+      "number": 10,
+      "name": "박수빈",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20611",
+      "grade": 2,
+      "class": 6,
+      "number": 11,
+      "name": "박초연",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20612",
+      "grade": 2,
+      "class": 6,
+      "number": 12,
+      "name": "박효빈",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20613",
+      "grade": 2,
+      "class": 6,
+      "number": 13,
+      "name": "소은찬",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20614",
+      "grade": 2,
+      "class": 6,
+      "number": 14,
+      "name": "손윤진",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20615",
+      "grade": 2,
+      "class": 6,
+      "number": 15,
+      "name": "오지현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20616",
+      "grade": 2,
+      "class": 6,
+      "number": 16,
+      "name": "윤진성",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20617",
+      "grade": 2,
+      "class": 6,
+      "number": 17,
+      "name": "이민서",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20618",
+      "grade": 2,
+      "class": 6,
+      "number": 18,
+      "name": "이승민",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20619",
+      "grade": 2,
+      "class": 6,
+      "number": 19,
+      "name": "이채영",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20620",
+      "grade": 2,
+      "class": 6,
+      "number": 20,
+      "name": "이현우",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20621",
+      "grade": 2,
+      "class": 6,
+      "number": 21,
+      "name": "전윤성",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20622",
+      "grade": 2,
+      "class": 6,
+      "number": 22,
+      "name": "전찬우",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20623",
+      "grade": 2,
+      "class": 6,
+      "number": 23,
+      "name": "정호윤",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20624",
+      "grade": 2,
+      "class": 6,
+      "number": 24,
+      "name": "조승빈",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20625",
+      "grade": 2,
+      "class": 6,
+      "number": 25,
+      "name": "최지호",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20626",
+      "grade": 2,
+      "class": 6,
+      "number": 26,
+      "name": "최찬희",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20627",
+      "grade": 2,
+      "class": 6,
+      "number": 27,
+      "name": "하지윤",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20628",
+      "grade": 2,
+      "class": 6,
+      "number": 28,
+      "name": "허수인",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20629",
+      "grade": 2,
+      "class": 6,
+      "number": 29,
+      "name": "허준현",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20701",
+      "grade": 2,
+      "class": 7,
+      "number": 1,
+      "name": "강주홍",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20702",
+      "grade": 2,
+      "class": 7,
+      "number": 2,
+      "name": "구자현",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20703",
+      "grade": 2,
+      "class": 7,
+      "number": 3,
+      "name": "권연진",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20704",
+      "grade": 2,
+      "class": 7,
+      "number": 4,
+      "name": "김나현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20705",
+      "grade": 2,
+      "class": 7,
+      "number": 5,
+      "name": "김도연",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20706",
+      "grade": 2,
+      "class": 7,
+      "number": 6,
+      "name": "김민준",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20707",
+      "grade": 2,
+      "class": 7,
+      "number": 7,
+      "name": "김윤주",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20708",
+      "grade": 2,
+      "class": 7,
+      "number": 8,
+      "name": "김채현",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20709",
+      "grade": 2,
+      "class": 7,
+      "number": 9,
+      "name": "나윤아",
+      "group_or_team": "여1조"
+    },
+    {
+      "student_id": "20710",
+      "grade": 2,
+      "class": 7,
+      "number": 10,
+      "name": "박시현",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20711",
+      "grade": 2,
+      "class": 7,
+      "number": 11,
+      "name": "서용규",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20712",
+      "grade": 2,
+      "class": 7,
+      "number": 12,
+      "name": "송지민",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20713",
+      "grade": 2,
+      "class": 7,
+      "number": 13,
+      "name": "신기욱",
+      "group_or_team": "남1조"
+    },
+    {
+      "student_id": "20714",
+      "grade": 2,
+      "class": 7,
+      "number": 14,
+      "name": "염승혜",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20715",
+      "grade": 2,
+      "class": 7,
+      "number": 15,
+      "name": "우연우",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20716",
+      "grade": 2,
+      "class": 7,
+      "number": 16,
+      "name": "윤현우",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20717",
+      "grade": 2,
+      "class": 7,
+      "number": 17,
+      "name": "이서경",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20718",
+      "grade": 2,
+      "class": 7,
+      "number": 18,
+      "name": "이유주",
+      "group_or_team": "여2조"
+    },
+    {
+      "student_id": "20719",
+      "grade": 2,
+      "class": 7,
+      "number": 19,
+      "name": "이준희",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20720",
+      "grade": 2,
+      "class": 7,
+      "number": 20,
+      "name": "이지민",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20721",
+      "grade": 2,
+      "class": 7,
+      "number": 21,
+      "name": "임재민",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20722",
+      "grade": 2,
+      "class": 7,
+      "number": 22,
+      "name": "장수민",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20723",
+      "grade": 2,
+      "class": 7,
+      "number": 23,
+      "name": "전민교",
+      "group_or_team": "남2조"
+    },
+    {
+      "student_id": "20724",
+      "grade": 2,
+      "class": 7,
+      "number": 24,
+      "name": "전영찬",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20725",
+      "grade": 2,
+      "class": 7,
+      "number": 25,
+      "name": "정성엽",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20726",
+      "grade": 2,
+      "class": 7,
+      "number": 26,
+      "name": "정아린",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20727",
+      "grade": 2,
+      "class": 7,
+      "number": 27,
+      "name": "조서준",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20728",
+      "grade": 2,
+      "class": 7,
+      "number": 28,
+      "name": "조향희",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20729",
+      "grade": 2,
+      "class": 7,
+      "number": 29,
+      "name": "진이주",
+      "group_or_team": "여3조"
+    },
+    {
+      "student_id": "20730",
+      "grade": 2,
+      "class": 7,
+      "number": 30,
+      "name": "한지형",
+      "group_or_team": "남3조"
+    },
+    {
+      "student_id": "20731",
+      "grade": 2,
+      "class": 7,
+      "number": 31,
+      "name": "홍지원",
+      "group_or_team": "남3조"
+    }
+  ]
   </script>
   <script src="./app.js" defer></script>
 </body>
