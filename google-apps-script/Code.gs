@@ -2,13 +2,14 @@
  * 수업기록수집시스템 Google Apps Script Web App endpoint.
  *
  * 전제:
- * - 현재 스크립트가 저장소로 사용할 Google Spreadsheet에 바인드되어 있어야 합니다.
+ * - SPREADSHEET_ID가 저장소로 사용할 Google Spreadsheet를 가리켜야 합니다.
  * - 첫 번째 행은 아래 헤더와 완전히 일치해야 합니다.
  * - record_id는 Records 헤더를 변경하지 않고 ScriptProperties에 저장하여 중복을 판별합니다.
  */
 
 var STUDENTS_SHEET_NAME = 'Students';
 var RECORDS_SHEET_NAME = 'Records';
+var SPREADSHEET_ID = '11_R53lnAtU6sUyXPGPDKhum7XKLGFWxIp1jqr93AERE';
 
 var STUDENTS_HEADERS = [
   'student_id',
@@ -217,11 +218,11 @@ function getQueryParameter_(e, name) {
 }
 
 function getSpreadsheet_() {
-  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
   if (!spreadsheet) {
     throwAppError_(
       'SPREADSHEET_NOT_FOUND',
-      '활성 Spreadsheet를 찾을 수 없습니다. 이 스크립트를 저장소 Spreadsheet에 바인드하세요.',
+      '저장소 Spreadsheet를 찾을 수 없습니다. SPREADSHEET_ID와 접근 권한을 확인하세요.',
       500
     );
   }
