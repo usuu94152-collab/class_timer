@@ -2,6 +2,9 @@
   'use strict';
 
   const ACTIVITY_TYPE = 'obstacle_run';
+  // 임시 목표 기준. 추후 이 두 값만 교사 설정값으로 교체합니다.
+  const GOAL_ATTEMPTS = 3;
+  const GOAL_RECORD_SECONDS = 2.00;
   const STORAGE_KEY = 'movement-records-obstacle-run-v1';
   const CLASS_STORAGE_KEY = 'movement-records-selected-class-v1';
   const GROUP_STORAGE_KEY = 'movement-records-selected-group-v1';
@@ -336,6 +339,14 @@
     return new Intl.DateTimeFormat('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }).format(date);
   }
 
+  function getGoalStatus(studentRecords) {
+    const best = studentRecords.length ? Math.min(...studentRecords.map((record) => Number(record.record_seconds))) : null;
+    return {
+      achieved: studentRecords.length >= GOAL_ATTEMPTS && best !== null && best <= GOAL_RECORD_SECONDS,
+      best
+    };
+  }
+
   function escapeHtml(value) {
     return String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
   }
@@ -500,6 +511,7 @@
     const best = studentRecords.length ? Math.min(...studentRecords.map((record) => Number(record.record_seconds))) : null;
     const latest = studentRecords.length ? studentRecords[studentRecords.length - 1].record_seconds : null;
     const improvement = first === null || best === null ? null : first - best;
+    const goal = getGoalStatus(studentRecords);
 
     document.getElementById('records-title').textContent = `${student.name}의 기록`;
     document.getElementById('records-student-meta').textContent = `${student.class}반 · ${student.group_or_team} · ${student.number}번 · 장애물달리기`;
@@ -509,6 +521,10 @@
     document.getElementById('records-best').innerHTML = best === null ? '—<span>초</span>' : `${formatSeconds(best)}<span>초</span>`;
     document.getElementById('records-latest').innerHTML = latest === null ? '—<span>초</span>' : `${formatSeconds(latest)}<span>초</span>`;
     document.getElementById('records-improvement').innerHTML = improvement === null ? '—<span>초</span>' : `${formatSeconds(improvement)}<span>초</span>`;
+    const goalStatus = document.getElementById('records-goal-status');
+    goalStatus.textContent = goal.achieved ? '달성' : '진행 중';
+    goalStatus.classList.toggle('is-achieved', goal.achieved);
+    document.getElementById('records-goal-detail').textContent = `연습 ${studentRecords.length}/${GOAL_ATTEMPTS}회 · 최고 ${goal.best === null ? '—' : formatSeconds(goal.best)}초 / 목표 ${formatSeconds(GOAL_RECORD_SECONDS)}초 이하`;
     renderRecordsChart(student, studentRecords);
 
     const recordsList = document.getElementById('records-list');

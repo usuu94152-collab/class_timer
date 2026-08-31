@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#10213e">
   <title>움직임 기록 | 장애물달리기</title>
-  <link rel="stylesheet" href="./styles.css?v=2">
+  <link rel="stylesheet" href="./styles.css?v=3">
 </head>
 <body>
   <div class="app-shell">
@@ -168,7 +168,9 @@
           <div><span>최고 기록</span><strong id="records-best">—<span>초</span></strong></div>
           <div><span>최근 기록</span><strong id="records-latest">—<span>초</span></strong></div>
           <div><span>향상폭</span><strong id="records-improvement">—<span>초</span></strong></div>
+          <div><span>목표 상태</span><strong id="records-goal-status" class="records-goal-status" aria-live="polite">진행 중</strong></div>
         </div>
+        <p class="records-goal-detail" id="records-goal-detail" aria-live="polite">연습 0/3회 · 최고 — · 목표 2.00초 이하</p>
 
         <div class="records-chart-card" id="records-chart-card" hidden>
           <div class="records-chart-header">
@@ -1899,6 +1901,6 @@
     }
   ]
   </script>
-  <script src="./app.js?v=6" defer></script>
+  <script src="./app.js?v=7" defer></script>
 </body>
 </html>

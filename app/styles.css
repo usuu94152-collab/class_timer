@@ -359,12 +359,15 @@ button:focus-visible, a:focus-visible {
 .records-header > div > p:last-child { margin: 12px 0 0; color: var(--muted); font-size: 13px; }
 .record-summary-badge { min-width: 104px; padding: 15px 18px; display: flex; flex-direction: column; align-items: end; border-radius: 13px; color: var(--muted); background: var(--blue-100); font-size: 11px; }
 .record-summary-badge strong { color: var(--blue-500); font-family: 'Cascadia Mono', 'Roboto Mono', monospace; font-size: 27px; font-weight: 500; line-height: 1; }
-.records-overview { margin: 39px 0 18px; display: grid; grid-template-columns: repeat(5, 1fr); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); box-shadow: 0 8px 25px rgba(23, 49, 88, 0.035); }
+.records-overview { margin: 39px 0 10px; display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); box-shadow: 0 8px 25px rgba(23, 49, 88, 0.035); }
 .records-overview > div { padding: 22px 25px; }
 .records-overview > div + div { border-left: 1px solid var(--line); }
 .records-overview span { display: block; color: var(--muted); font-size: 11px; }
 .records-overview strong { display: block; margin-top: 8px; color: var(--navy-900); font-family: 'Cascadia Mono', 'Roboto Mono', monospace; font-size: 27px; font-weight: 500; letter-spacing: -0.1em; }
 .records-overview strong span { display: inline; margin-left: 4px; color: var(--muted); font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif; font-size: 11px; letter-spacing: -0.05em; }
+.records-overview .records-goal-status { color: var(--blue-500); font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif; font-size: 19px; letter-spacing: -0.06em; }
+.records-overview .records-goal-status.is-achieved { color: var(--mint-500); }
+.records-goal-detail { margin: 0 4px 18px; color: var(--muted); font-size: 11px; }
 .records-chart-card { margin-bottom: 18px; padding: 24px 25px 18px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper); box-shadow: 0 8px 25px rgba(23, 49, 88, 0.035); }
 .records-chart-header { display: flex; align-items: end; justify-content: space-between; gap: 20px; }
 .records-chart-header h2 { margin: 8px 0 0; color: var(--navy-900); font-size: 20px; }
