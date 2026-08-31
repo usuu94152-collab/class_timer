@@ -371,7 +371,7 @@ button:focus-visible, a:focus-visible {
 .records-chart-header p { margin: 0; color: var(--muted); font-size: 11px; }
 .records-chart { width: 100%; height: auto; margin-top: 18px; overflow: visible; }
 .chart-grid-line { stroke: var(--line); stroke-width: 1; }
-.chart-axis { stroke: #b9c7da; stroke-width: 1.2; }
+.chart-axis { stroke: var(--line); stroke-width: 1.2; }
 .chart-axis-label, .chart-caption { fill: var(--muted); font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif; font-size: 11px; }
 .chart-caption { font-size: 10px; }
 .chart-line { fill: none; stroke: var(--mint-500); stroke-linecap: round; stroke-linejoin: round; stroke-width: 4; }

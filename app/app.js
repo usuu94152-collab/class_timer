@@ -440,7 +440,6 @@
       return;
     }
 
-    const chartWidth = 720;
     const chartHeight = 280;
     const chartLeft = 60;
     const chartRight = 700;
@@ -470,7 +469,7 @@
         <text class="chart-axis-label chart-axis-label--y" x="${chartLeft - 12}" y="${y + 4}" text-anchor="end">${formatSeconds(value)}초</text>`;
     }).join('');
     const line = points.map((point) => `${point.x},${point.y}`).join(' ');
-    const labels = points.map((point, index) => `
+    const labels = points.map((point) => `
       <text class="chart-axis-label chart-axis-label--x" x="${point.x}" y="${chartBottom + 31}" text-anchor="middle">${escapeHtml(point.record.attempt_no)}회</text>`).join('');
     const circles = points.map((point) => `
       <circle class="chart-point${point.isBest ? ' is-best' : ''}" cx="${point.x}" cy="${point.y}" r="6">
