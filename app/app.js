@@ -437,6 +437,7 @@
     const chart = document.getElementById('records-chart');
     if (!chartCard || !chart || studentRecords.length === 0) {
       if (chartCard) chartCard.hidden = true;
+      if (chart) chart.innerHTML = '';
       return;
     }
 
