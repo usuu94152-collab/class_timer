@@ -392,17 +392,21 @@ MVP 검증 후 플로어볼 모듈 개발을 시작한다.
 구현 파일:
 - `app/index.html`: 학생 선택, 타이머, 저장 확인, 기록 조회 화면
 - `app/styles.css`: Chromebook/모바일용 반응형 UI
-- `app/app.js`: 조별 학생 표시, START/STOP 상태 관리, localStorage 저장, 기록 요약
+- `app/app.js`: 조별 학생 표시, START/STOP 상태 관리, Google Sheets 연동 및 localStorage 임시 저장, 기록 요약
 - `server.mjs`: 로컬 정적 서버
-- `google-apps-script/Code.gs`: Students/Records Google Sheets Web App 엔드포인트
+- `google-apps-script/Code.gs`: Students/Records Google Sheets Web App 엔드포인트 및 JSONP 응답
 
 현재 실행:
 - `npm start`
 - 브라우저에서 `http://localhost:4173` 접속
 - 문법 검사: `npm run check`
 
-다음 통합 작업:
-- 실제 Students·Records 시트 생성
-- Apps Script Web App 배포
-- 배포 URL을 웹앱 저장 흐름에 연결
-- 실제 학급 명렬로 샘플 학생 데이터 교체
+완료된 통합 작업:
+- `체육수업 기록관리 시스템` Google Sheets에 Students·Records 시트 구성
+- 2학년 7개 반, 212명 학생 명렬 및 성별 조 편성 반영
+- Apps Script Web App 배포 및 GitHub Pages 앱 연결
+- 학생 조회, 기록 저장, 학생별 기록 조회 및 임시 저장 fallback 구현
+
+다음 작업:
+- Chromebook 실기기 환경 테스트
+- 학생별 요약 및 평가자료 기능 구현

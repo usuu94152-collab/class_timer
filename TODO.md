@@ -114,20 +114,27 @@
     - record_seconds
     - activity_type
 
-- [~] 웹앱 → Google Sheets 저장 구현
+- [x] 웹앱 → Google Sheets 저장 구현
   - 완료 조건:
     - 저장 버튼 1회당 1행 추가
     - 중복 저장 방지
     - 저장 실패 처리
     - 저장 성공 여부 UI 반영
+  - 검증:
+    - Apps Script Web App 공개 배포 및 health 응답 확인
+    - GitHub Pages의 JSONP 조회와 no-cors 저장 흐름 확인
+    - 저장 후 Records 재조회 및 중복 방지 로직 확인
 
-- [~] 기록 조회 구현
+- [x] 기록 조회 구현
   - 완료 조건:
     - 학생별 기존 기록 조회
     - 연습 횟수 계산
     - 최고 기록 계산
     - 최초 기록 계산
     - 최근 기록 계산
+  - 검증:
+    - Students 212명 원격 조회
+    - Records 원격 조회 및 학생별 화면 반영
 
 ---
 
